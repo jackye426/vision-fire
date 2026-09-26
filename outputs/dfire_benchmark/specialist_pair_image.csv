@@ -1,0 +1,3 @@
+combination,threshold,smoke_hits_of_80,flame_hits_of_80,clear_flags_of_40,smoke_aligned_iou50_of_80_at_025,flame_aligned_iou50_of_80_at_025,median_cpu_ms_per_image
+pyronear_smoke_OR_soul_flame,0.25,19,52,6,8,36,372.5
+pyronear_smoke_OR_soul_flame,0.5,10,39,3,,,372.5

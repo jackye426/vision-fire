@@ -1,0 +1,11 @@
+model,threshold,positive_clips_with_smoke_2hit_of_3,clear_clips_with_smoke_2hit_of_3,positive_smoke_flagged_frames_of_108,clear_smoke_flagged_frames_of_108,median_cpu_ms_per_frame
+dfire_yolov8n,0.25,1,2,5,52,52.0
+dfine,0.25,3,3,108,84,381.5
+yolo,0.25,2,2,33,71,697.8
+soul,0.25,0,0,0,0,53.3
+pyronear,0.25,1,2,7,14,324.5
+dfire_yolov8n,0.5,0,1,1,37,52.0
+dfine,0.5,3,2,95,72,381.5
+yolo,0.5,1,2,12,50,697.8
+soul,0.5,0,0,0,0,53.3
+pyronear,0.5,1,0,4,0,324.5

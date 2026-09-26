@@ -1,0 +1,13 @@
+clip,label,camera_id,window_start_frame,window_end_frame,detector_hit_frames,kept_tubes,max_tube_probability,smoke_decision,detector_ms_clip,temporal_ms_window
+smoke_cam0_6.mp4,smoke,0,0,19,6,1,0.008659942412023804,0,15667.1,1592.4
+smoke_cam0_6.mp4,smoke,0,16,35,1,0,0,0,15667.1,0.3
+smoke_cam1_27021.mp4,smoke,1,0,19,12,1,0.949131227673791,1,10274.8,1342.4
+smoke_cam1_27021.mp4,smoke,1,16,35,2,1,0.809385232110424,1,10274.8,1054.1
+smoke_cam2_27714.mp4,smoke,2,0,19,3,0,0,0,9891.0,0.2
+smoke_cam2_27714.mp4,smoke,2,16,35,2,0,0,0,9891.0,0.1
+clear_cam0_648.mp4,clear,0,0,19,3,0,0,0,10430.1,0.2
+clear_cam0_648.mp4,clear,0,16,35,5,1,0.17964126830993885,0,10430.1,1356.7
+clear_cam1_26870.mp4,clear,1,0,19,0,0,0,0,10020.1,0.2
+clear_cam1_26870.mp4,clear,1,16,35,0,0,0,0,10020.1,0.2
+clear_cam2_28257.mp4,clear,2,0,19,0,0,0,0,10256.1,0.2
+clear_cam2_28257.mp4,clear,2,16,35,0,0,0,0,10256.1,0.2

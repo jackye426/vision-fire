@@ -1,0 +1,13 @@
+video,threshold,sampled_frames,flagged_frames,smoke_flagged_frames,flame_flagged_frames,first_2_hit_s
+FP1.mp4,0.25,30,0,0,0,
+FP1.mp4,0.5,30,0,0,0,
+FP14.mp4,0.25,2,2,0,2,1.0
+FP14.mp4,0.5,2,2,0,2,1.0
+FP31.mp4,0.25,16,9,1,8,3.0
+FP31.mp4,0.5,16,5,0,5,4.0
+VP1.mp4,0.25,30,0,0,0,
+VP1.mp4,0.5,30,0,0,0,
+VP3.mp4,0.25,30,4,4,0,2.0
+VP3.mp4,0.5,30,0,0,0,
+VP5.mp4,0.25,30,0,0,0,
+VP5.mp4,0.5,30,0,0,0,

@@ -1,0 +1,7 @@
+{
+  "published_test_images": 663,
+  "test_images_sharing_source_id_with_train": 226,
+  "test_images_after_train_overlap_filter": 437,
+  "one_image_per_remaining_source_id": 413,
+  "source_id_rule": "lowercase filename, strip _jpg and leading Mirror/Noise prefixes"
+}

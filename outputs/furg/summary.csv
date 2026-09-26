@@ -1,0 +1,11 @@
+model,threshold,flame_labeled_frames,flame_hit_frames,flame_aligned_iou50_frames,clear_clip_frames,clear_clip_flame_flags,clear_clips_with_2_hit_flame,clear_clip_smoke_flags_unscored,median_cpu_ms_per_frame
+dfire_yolov8n,0.25,79,62,51,102,4,1,10,53.8
+dfine,0.25,79,71,57,102,3,0,30,375.2
+yolo,0.25,79,65,55,102,0,0,5,696.9
+soul,0.25,79,71,55,102,15,2,0,55.1
+pyronear,0.25,79,0,0,102,0,0,3,319.4
+dfire_yolov8n,0.5,79,53,46,102,0,0,4,53.8
+dfine,0.5,79,68,56,102,0,0,8,375.2
+yolo,0.5,79,57,51,102,0,0,2,696.9
+soul,0.5,79,71,55,102,0,0,0,55.1
+pyronear,0.5,79,0,0,102,0,0,0,319.4

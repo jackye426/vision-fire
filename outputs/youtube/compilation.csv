@@ -1,0 +1,6 @@
+model,sampled_frames,smoke_025_frames,smoke_050_frames,flame_025_frames,flame_050_frames
+dfire_yolov8n,42,25,19,23,17
+dfine,42,29,27,23,20
+yolo,42,25,19,21,15
+soul,42,0,0,29,20
+pyronear,42,0,0,0,0

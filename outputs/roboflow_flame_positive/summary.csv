@@ -1,0 +1,13 @@
+group,model,images,hit_025,aligned30_025,aligned50_025,hit_050,aligned30_050,aligned50_050,median_latency_ms
+all,dfire_yolov8n,413,376,337,281,300,269,232,61
+all,dfine,413,397,381,347,378,342,292,457
+all,yolo,413,368,329,274,303,255,220,728
+all,soul,413,360,258,182,301,205,146,60
+smallest_quartile,dfire_yolov8n,104,82,77,69,52,49,45,66
+smallest_quartile,dfine,104,97,95,83,85,81,69,555
+smallest_quartile,yolo,104,81,78,68,52,48,41,783
+smallest_quartile,soul,104,66,33,23,45,21,13,65
+largest_quartile,dfire_yolov8n,104,102,85,65,89,71,56,62
+largest_quartile,dfine,104,102,93,86,101,85,71,438
+largest_quartile,yolo,104,100,79,63,86,63,53,720
+largest_quartile,soul,104,100,64,43,89,52,35,60

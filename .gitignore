@@ -1,0 +1,17 @@
+models/
+.streamlit/
+__pycache__/
+*.pyc
+.venv/
+.venv-export/
+.yolo-config/
+.cache/
+# Keep compact benchmark reports and tables; generated visual media stays local.
+outputs/**/*.mp4
+outputs/**/*.jpg
+outputs/**/*.jpeg
+outputs/**/*.png
+dataset/
+.uv-cache/
+.uv-python/
+.venv-temporal/
