@@ -20,7 +20,9 @@ The [two-angle waste-pit case study](MULTIANGLE_WASTE_PIT.md) reports flame and 
 
 The [shared incident prototype](SHARED_TEMPORAL_WASTE_PIT.md) now uses the two matching events as an estimated shared playback clock with a ±1 second matching margin. It compares same-camera repeats, same-image model agreement and two-view flame/smoke candidates while keeping one waste-pit incident record. The edited clip supports a case study of those rules, not an operational false-alert rate.
 
-The same report now includes a [three-model, two-view rule sweep](outputs/youtube/multimodel_multiangle_waste_pit.csv): D-FINE and FireViewer YOLO11-M overlap on an early false flame box, while D-FINE/D-Fire agreement and D-FINE cross-view evidence first find the small visible flame at the same estimated shared-clock time. A vision-language validator remains proposed, not measured.
+The same report now includes a [three-model, two-view rule sweep](outputs/youtube/multimodel_multiangle_waste_pit.csv): D-FINE and FireViewer YOLO11-M overlap on an early false flame box, while D-FINE/D-Fire agreement and D-FINE cross-view evidence first find the small visible flame at the same estimated shared-clock time.
+
+The [OpenRouter VLM validator pilot](VLM_VALIDATOR_PILOT.md) now tests that proposal on nine selected detector boxes from public clips. It rejected the repeated static-object and excavator false boxes, accepted the reviewed tiny flames and smoke, and added a median 2.38-second API round trip. One early smoke candidate remains visually ambiguous. These selected boxes do not estimate general accuracy or live alert delay.
 
 The [D-Fire benchmark report](BENCHMARK_REPORT.md) contains the first measured comparison on **160 labeled test images and six test videos**, plus a smoke-specialist/fire-specialist OR result and ten windows from the released PyroNear temporal smoke system. The app opens with its results table and lets you select an original test image or clip to inspect the boxes. Compact result tables under `outputs/` are included in Git; downloaded media under `dataset/`, model weights under `models/`, and rendered videos and images under `outputs/` stay local.
 
