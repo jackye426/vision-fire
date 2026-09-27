@@ -28,6 +28,27 @@ Thus the two-view rule corroborates the **first** D-FINE flame hits in this case
 
 The early angle-2 false flame boxes would produce a naive whole-frame two-frame alert at shared-clock 3 s. They do **not** pass cross-view corroboration in this clip, even without the reviewed-area filter. This is a useful failure case, but one short pre-fire segment cannot estimate false-alert reduction. The one notification in the incident JSON is also a direct consequence of the one-incident state machine, not a measured reduction in duplicate notifications.
 
+## Multi-model combinations on both views
+
+The [multi-model replay](analyze_waste_pit_multimodel.py) compares all three flame-capable checkpoints already run at 1 fps: D-FINE, D-Fire YOLOv8n and FireViewer YOLO11-M. It tests same-image box overlap, same-location three-model overlap, and every ordered model pairing across the two views. The [compact result table](outputs/youtube/multimodel_multiangle_waste_pit.csv) contains flame and smoke rows for the whole frame and the reviewed zone at score ≥0.25, box IoU ≥0.20 and a ±1 shared-clock-second cross-view margin. No model inference was rerun.
+
+| Flame evidence rule | First shared playback-clock second | What it boxes |
+| --- | ---: | --- |
+| D-FINE + FireViewer YOLO11-M, same image, whole frame | **1** (angle 2 source 56 s) | **False:** both overlap the same static object (IoU 0.82); they repeat this false agreement at source 57 s. A naive 2-of-3 model vote would alert before visible flame. |
+| D-FINE + D-Fire, same image in reviewed zone | **5** (angle 2 source 58 s) | Small visible flame. |
+| D-FINE in both views | **5** (angle 1 source 5 s; angle 2 source 58 s) | Small visible flame in both perspectives. |
+| D-FINE in angle 1 + D-Fire in angle 2 | **5** | Same early two-view event; no extra speed over either row above. |
+| All three models overlapping at one location | **6** (angle 1 source 6 s); **7** in angle 2 | Real flame, but later than the two-signal routes. |
+| FireViewer YOLO11-M in both views | **7** | Real flame, later than D-FINE. |
+
+Adding a third model therefore does **not** make the first valid flame confirmation earlier in this clip. Model agreement must be about the **same physical location**, and agreement between D-FINE and FireViewer YOLO11-M is not independent evidence here: they make the same early false box. Across views, D-FINE supplies the first matching flame evidence. For smoke, FireViewer YOLO11-M has an angle-1 reviewed-zone box at 12 s; same-image model agreement in angle 1 and D-FINE cross-view smoke both begin at 13 s. These are candidate signals in one edited positive clip, not measured precision or recall.
+
+## Should a vision-language model verify alerts?
+
+No VLM has been run on these frames yet. A text-only LLM cannot inspect them; an image/video-capable VLM, such as [Qwen3-VL](https://github.com/QwenLM/Qwen3-VL), is the relevant experiment. It could review a detector crop plus the full frame, or a short sequence from both cameras, and return `flame`, `smoke`, `neither` or `uncertain` with visible evidence. It should first run **alongside** the current rules on fixed positive and hard-negative windows, with its exact input frames, response time, errors and cost recorded. Video VLMs can make temporal mistakes, so a fluent explanation should not be treated as verification without a measured error rate ([VidHal benchmark](https://arxiv.org/abs/2411.16771)).
+
+For flame in this case, D-FINE cross-view and D-FINE/D-Fire agreement are already available at shared-clock 5 s. A VLM triggered by those frames cannot establish the result *before the frames exist*; response time would make it later as a blocking gate. It might instead help reject the angle-2 static false box at source 56–57 s. For smoke, reviewing FireViewer YOLO11-M's earlier angle-1 box at 12 s **could** beat the 13 s corroboration only if the VLM is correct and responds before that later evidence arrives in real camera time; the edited playback clock cannot settle this. Keep the VLM as a possible second opinion until those two quantities are measured.
+
 ## Outside-clip check and limits
 
 The [FURG same-camera model-agreement check](outputs/furg/model_agreement_check.csv) provides a caution about making any second-evidence rule mandatory. Among 79 flame-labeled sampled frames in three clips, D-FINE boxes flame in 71 and overlapping D-FINE/D-Fire boxes occur in 61. Among 102 frames from two flame-free clips, D-FINE has three flame hits and the overlap rule has none, but ordinary D-FINE two-frame persistence also makes zero alerts there. On `house1`, D-FINE first hits at 13.013 s, first repeats at 14.014 s, and first overlaps D-Fire only at 19.019 s. The second camera could provide a faster alternative when another model misses, but this edited waste-pit clip cannot establish how often that happens.
