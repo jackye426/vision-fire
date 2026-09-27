@@ -26,6 +26,7 @@ from analyze_waste_pit_multiangle import (
     SECOND_B,
     THIRD_A,
     THIRD_B,
+    angle1_video_time,
     angle2_video_time,
     boxes,
     draw_text,
@@ -38,7 +39,8 @@ TIMELINE = OUT.with_name("shared_temporal_waste_pit.csv")
 INCIDENT = OUT.with_name("shared_temporal_waste_pit_incident.json")
 VIDEO = OUT.with_name("5NAkyEmC0IU_shared_temporal_h264.mp4")
 MATCH_IOU = 0.20
-STAGES = ("clear", "watch", "provisional")
+SYNC_MARGIN_S = 1.0  # In the angle-1 playback clock; user-estimated error.
+STAGES = ("clear", "watch", "provisional", "two_view")
 
 
 @dataclass
@@ -56,7 +58,8 @@ class IncidentRecord:
     camera_observations: dict[str, dict[str, int]] = field(default_factory=dict)
 
     def update(self, common: int, flame: dict[str, bool], smoke: dict[str, bool],
-               model_agree: dict[str, bool], watch: bool, operator: bool) -> bool:
+               model_agree: dict[str, bool], watch: bool, operator: bool,
+               two_view: bool) -> bool:
         """Accumulate evidence and emit at most one provisional review alert."""
         if any(flame.values()) or any(smoke.values()):
             if self.first_evidence_s is None:
@@ -83,7 +86,8 @@ class IncidentRecord:
                     observation[f"last_{label}_source_s"] = source_second
         if watch:
             self.milestones.setdefault("watch", common)
-        target = ("provisional" if operator else
+        target = ("two_view" if two_view else
+                  "provisional" if operator else
                   "watch" if watch else self.stage)
         if STAGES.index(target) > STAGES.index(self.stage):
             self.stage = target
@@ -93,7 +97,7 @@ class IncidentRecord:
             self.operator_alerts_emitted = 1
         return new_operator_alert
 
-    def as_dict(self) -> dict:
+    def as_dict(self, cross_matches: dict[str, dict | None]) -> dict:
         return {
             "incident_id": self.incident_id,
             "physical_zone": self.physical_zone,
@@ -102,8 +106,15 @@ class IncidentRecord:
                 {"angle1": SECOND_A, "angle2": SECOND_B},
                 {"angle1": THIRD_A, "angle2": THIRD_B},
             ],
-            "cross_view_temporal_enabled": False,
-            "temporal_mode": "approximate_visual_alignment_offline_case_study",
+            "cross_view_temporal_enabled": True,
+            "temporal_mode": "estimated_shared_playback_clock_offline_case_study",
+            "shared_clock": {
+                "unit": "angle1_source_playback_second",
+                "matching_margin_s": SYNC_MARGIN_S,
+                "angle1_sampling_s": 1,
+                "angle2_sampling_equivalent_s": 2,
+            },
+            "first_cross_view_matches": cross_matches,
             "stage": self.stage,
             "first_evidence_replay_s": self.first_evidence_s,
             "last_evidence_replay_s": self.last_evidence_s,
@@ -147,8 +158,43 @@ def model_agreement(data: dict, label: str, angle: str,
     return any(iou(a, b) >= MATCH_IOU for a in dfine for b in dfire)
 
 
+def first_cross_view_match(data: dict, label: str, focused: bool = True,
+                           margin_s: float = SYNC_MARGIN_S) -> dict | None:
+    """Earliest causal same-class match on the estimated shared playback clock.
+
+    Candidate boxes must be in the same known physical zone. Their pixel boxes
+    are never compared across views. The match becomes available only after
+    both source frames have occurred on the mapped playback clock.
+    """
+    first_view = [second for second in range(ANCHOR_A, 53)
+                  if boxes(data, "dfine", second, label, "angle1", focused)]
+    second_view = [second for second in range(int(ANCHOR_B), 103)
+                   if boxes(data, "dfine", second, label, "angle2", focused)]
+    candidates = []
+    for a in first_view:
+        for b in second_view:
+            b_clock = angle1_video_time(b)
+            gap = abs(a - b_clock)
+            if gap <= margin_s:
+                candidates.append({
+                    "angle1_source_s": a,
+                    "angle2_source_s": b,
+                    "angle2_on_shared_clock_s": b_clock,
+                    "separation_on_shared_clock_s": gap,
+                    "available_shared_clock_s": max(a, b_clock),
+                })
+    return min(candidates,
+               key=lambda item: (item["available_shared_clock_s"],
+                                 item["separation_on_shared_clock_s"])) if candidates else None
+
+
 def first(rows: list[dict], field: str) -> int | None:
     return next((int(row["replay_s"]) for row in rows if int(row[field])), None)
+
+
+def first_on_shared_clock(rows: list[dict], field: str) -> int | None:
+    replay_second = first(rows, field)
+    return None if replay_second is None else ANCHOR_A + replay_second
 
 
 def render_video(data: dict, rows: list[dict]) -> None:
@@ -172,10 +218,13 @@ def render_video(data: dict, rows: list[dict]) -> None:
             state = rows[sampled]
             canvas = np.full((470, 1280, 3), (22, 22, 22), np.uint8)
             color = {"clear": (190, 190, 190), "watch": (255, 220, 100),
-                     "provisional": (255, 210, 80)}[state["incident_stage"]]
-            draw_text(canvas, f"Waste-pit shared incident: {state['incident_stage'].replace('_', ' ').upper()}",
+                     "provisional": (255, 210, 80),
+                     "two_view": (90, 225, 120)}[state["incident_stage"]]
+            stage_label = ("TWO-VIEW CANDIDATE" if state["incident_stage"] == "two_view"
+                           else state["incident_stage"].upper())
+            draw_text(canvas, f"Waste-pit shared incident: {stage_label}",
                       (12, 28), 0.72, color)
-            draw_text(canvas, f"2-LANDMARK VISUAL WARP / NO CAMERA SYNC | display +{common:.1f}s | "
+            draw_text(canvas, f"ESTIMATED SHARED PLAYBACK CLOCK +/-1s | display +{common:.1f}s | "
                       f"operator alerts {state['operator_alerts_total']}",
                       (12, 55), 0.52)
             if state["new_operator_alert"]:
@@ -224,9 +273,14 @@ def render_video(data: dict, rows: list[dict]) -> None:
 
 def main() -> None:
     data = load_rows()
+    cross_matches = {
+        "flame": first_cross_view_match(data, "flame"),
+        "smoke": first_cross_view_match(data, "smoke"),
+    }
     rows = []
     incident = IncidentRecord()
     for common in range(LAST_COMMON_SECOND + 1):
+        shared_clock = ANCHOR_A + common
         flame_hit = {angle: hit(data, "dfine", "flame", angle, common)
                      for angle in ("angle1", "angle2")}
         flame_repeat = {angle: repeat_at(data, "dfine", "flame", angle, common)
@@ -236,9 +290,13 @@ def main() -> None:
         # A shared incident advances through tiers; later evidence updates this
         # single incident instead of opening another camera/class alert.
         watch = any(flame_hit.values())
-        # Repetition alone can preserve a false static-object track. Keep it as
-        # track history; an operator review needs same-camera model agreement.
+        # Repetition alone can preserve a false static-object track. A second
+        # model or the second physical view can request operator review.
         operator = any(same_frame_models.values())
+        two_view = (cross_matches["flame"] is not None and
+                    cross_matches["flame"]["available_shared_clock_s"] <= shared_clock)
+        two_view_smoke = (cross_matches["smoke"] is not None and
+                          cross_matches["smoke"]["available_shared_clock_s"] <= shared_clock)
         smoke = {angle: hit(data, "dfine", "smoke", angle, common)
                  for angle in ("angle1", "angle2")}
         raw_repeat_angle2 = repeat_at(data, "dfine", "flame", "angle2",
@@ -247,9 +305,10 @@ def main() -> None:
                                                   focused=False)
                                   for angle in ("angle1", "angle2"))
         new_alert = incident.update(common, flame_hit, smoke, same_frame_models,
-                                    watch, operator)
+                                    watch, operator, two_view)
         rows.append({
             "replay_s": common,
+            "shared_clock_angle1_source_s": shared_clock,
             "angle1_source_s": time_for("angle1", common),
             "angle2_source_s": time_for("angle2", common),
             "angle2_visual_mapped_s": round(angle2_video_time(ANCHOR_A + common), 3),
@@ -264,7 +323,10 @@ def main() -> None:
             "dfine_smoke_angle2": int(smoke["angle2"]),
             "watch_condition": int(watch),
             "operator_condition": int(operator),
-            "cross_view_temporal_enabled": 0,
+            "two_view_flame_condition": int(two_view),
+            "two_view_smoke_condition": int(two_view_smoke),
+            "cross_view_temporal_enabled": 1,
+            "sync_margin_shared_clock_s": SYNC_MARGIN_S,
             "smoke_support_condition": int(any(smoke.values())),
             "raw_angle2_dfine_repeat_baseline": int(raw_repeat_angle2),
             "raw_same_frame_model_agreement": int(raw_model_agreement),
@@ -278,13 +340,29 @@ def main() -> None:
         writer = csv.DictWriter(handle, fieldnames=rows[0])
         writer.writeheader()
         writer.writerows(rows)
+    summary = incident.as_dict(cross_matches)
+    summary["policy_first_signal_shared_clock_s"] = {
+        "whole_frame_angle2_dfine_two_frame_repeat": first_on_shared_clock(
+            rows, "raw_angle2_dfine_repeat_baseline"),
+        "reviewed_zone_angle1_dfine_two_frame_repeat": first_on_shared_clock(
+            rows, "dfine_flame_repeat_angle1"),
+        "reviewed_zone_angle2_dfine_two_frame_repeat": first_on_shared_clock(
+            rows, "dfine_flame_repeat_angle2"),
+        "same_image_dfine_dfire_flame_agreement": first_on_shared_clock(
+            rows, "operator_condition"),
+        "two_view_dfine_flame_match": first_on_shared_clock(
+            rows, "two_view_flame_condition"),
+        "two_view_dfine_smoke_match": first_on_shared_clock(
+            rows, "two_view_smoke_condition"),
+    }
     with INCIDENT.open("w", encoding="utf-8") as handle:
-        json.dump(incident.as_dict(), handle, indent=2)
+        json.dump(summary, handle, indent=2)
         handle.write("\n")
     render_video(data, rows)
     print(f"Saved {TIMELINE}")
     print(f"Saved {INCIDENT}")
-    for field in ("watch_condition", "operator_condition", "smoke_support_condition"):
+    for field in ("watch_condition", "operator_condition", "two_view_flame_condition",
+                  "two_view_smoke_condition", "smoke_support_condition"):
         seen = first(rows, field)
         print(f"{field}: {'disabled or absent' if seen is None else f'replay +{seen}s'}")
     print(f"raw single-camera repeat baseline: +"

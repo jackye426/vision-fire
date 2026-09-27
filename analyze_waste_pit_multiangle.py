@@ -52,6 +52,12 @@ def angle2_video_time(angle1_video_time: float) -> float:
         (THIRD_B - SECOND_B) / (THIRD_A - SECOND_A))
 
 
+def angle1_video_time(angle2_video_time: float) -> float:
+    """Map an angle-2 source time onto the shared angle-1 playback clock."""
+    return SECOND_A + (angle2_video_time - SECOND_B) * (
+        (THIRD_A - SECOND_A) / (THIRD_B - SECOND_B))
+
+
 def load_rows() -> dict[tuple[str, int], list[dict]]:
     found = {}
     with INPUT.open(newline="", encoding="utf-8") as handle:

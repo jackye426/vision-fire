@@ -18,7 +18,7 @@ The [two supplied screen recordings report](SUPPLIED_CLIP_REPORT.md) covers the 
 
 The [two-angle waste-pit case study](MULTIANGLE_WASTE_PIT.md) reports flame and smoke detections separately in each edited view. The views play at different speeds; the local side-by-side video uses two matching events to correct the display speed approximately, without claiming camera-clock synchronization or a measured cross-camera alert time.
 
-The [shared incident prototype](SHARED_TEMPORAL_WASTE_PIT.md) records per-view detections, same-view box repeats, same-image model agreement, and later evidence under one known waste-pit incident. Cross-view verification is disabled for this edited footage; the report explains the context needed for simultaneous camera feeds.
+The [shared incident prototype](SHARED_TEMPORAL_WASTE_PIT.md) now uses the two matching events as an estimated shared playback clock with a ±1 second matching margin. It compares same-camera repeats, same-image model agreement and two-view flame/smoke candidates while keeping one waste-pit incident record. The edited clip supports a case study of those rules, not an operational false-alert rate.
 
 The [D-Fire benchmark report](BENCHMARK_REPORT.md) contains the first measured comparison on **160 labeled test images and six test videos**, plus a smoke-specialist/fire-specialist OR result and ten windows from the released PyroNear temporal smoke system. The app opens with its results table and lets you select an original test image or clip to inspect the boxes. Compact result tables under `outputs/` are included in Git; downloaded media under `dataset/`, model weights under `models/`, and rendered videos and images under `outputs/` stay local.
 

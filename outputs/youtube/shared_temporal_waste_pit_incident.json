@@ -15,9 +15,31 @@
       "angle2": 71
     }
   ],
-  "cross_view_temporal_enabled": false,
-  "temporal_mode": "approximate_visual_alignment_offline_case_study",
-  "stage": "provisional",
+  "cross_view_temporal_enabled": true,
+  "temporal_mode": "estimated_shared_playback_clock_offline_case_study",
+  "shared_clock": {
+    "unit": "angle1_source_playback_second",
+    "matching_margin_s": 1.0,
+    "angle1_sampling_s": 1,
+    "angle2_sampling_equivalent_s": 2
+  },
+  "first_cross_view_matches": {
+    "flame": {
+      "angle1_source_s": 5,
+      "angle2_source_s": 58,
+      "angle2_on_shared_clock_s": 5.0,
+      "separation_on_shared_clock_s": 0.0,
+      "available_shared_clock_s": 5
+    },
+    "smoke": {
+      "angle1_source_s": 13,
+      "angle2_source_s": 62,
+      "angle2_on_shared_clock_s": 13.0,
+      "separation_on_shared_clock_s": 0.0,
+      "available_shared_clock_s": 13
+    }
+  },
+  "stage": "two_view",
   "first_evidence_replay_s": 3,
   "last_evidence_replay_s": 45,
   "operator_alerts_emitted": 1,
@@ -53,7 +75,15 @@
   ],
   "milestones_replay_s": {
     "watch": 3,
-    "provisional": 3,
+    "two_view": 3,
     "first_smoke": 11
+  },
+  "policy_first_signal_shared_clock_s": {
+    "whole_frame_angle2_dfine_two_frame_repeat": 3,
+    "reviewed_zone_angle1_dfine_two_frame_repeat": 6,
+    "reviewed_zone_angle2_dfine_two_frame_repeat": 7,
+    "same_image_dfine_dfire_flame_agreement": 5,
+    "two_view_dfine_flame_match": 5,
+    "two_view_dfine_smoke_match": 13
   }
 }
