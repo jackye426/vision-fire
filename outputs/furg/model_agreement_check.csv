@@ -1,0 +1,6 @@
+clip,cohort,frames,dfine_flame_frames,dfire_flame_frames,same_frame_agreement_frames,dfine_repeat_frames,agreement_episodes,dfine_repeat_episodes,first_labeled_time_s,first_dfine_hit_time_s,first_agreement_time_s,first_dfine_repeat_time_s
+barbecue,labeled_flame_frames,30,30,28,27,25,4,3,0.000,0.000,0.000,1.001
+coolerbot,flame_free_clip,90,3,4,0,0,0,0,,15.015,,
+hand_held_camera_wildfire,labeled_flame_frames,24,24,23,23,23,2,1,2.002,2.002,2.002,3.003
+house1,labeled_flame_frames,25,17,11,11,16,1,1,5.005,13.013,19.019,14.014
+non_fire_patrolbot_onboard,flame_free_clip,12,0,0,0,0,0,0,,,,

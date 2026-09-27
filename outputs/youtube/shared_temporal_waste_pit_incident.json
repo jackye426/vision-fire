@@ -1,0 +1,31 @@
+{
+  "incident_id": "waste_pit_1",
+  "physical_zone": "waste_pit",
+  "alignment": {
+    "angle1_source_s": 2,
+    "angle2_source_s": 56
+  },
+  "stage": "persistent_both",
+  "first_evidence_aligned_s": 2,
+  "last_evidence_aligned_s": 42,
+  "operator_alerts_emitted": 1,
+  "supporting_cameras": [
+    "angle1",
+    "angle2"
+  ],
+  "supporting_models": [
+    "dfine",
+    "dfire_yolov8n"
+  ],
+  "observed_classes": [
+    "flame",
+    "smoke"
+  ],
+  "milestones_aligned_s": {
+    "watch": 2,
+    "provisional": 2,
+    "two_view": 3,
+    "persistent_both": 4,
+    "first_smoke": 6
+  }
+}

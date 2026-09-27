@@ -18,6 +18,8 @@ The [two supplied screen recordings report](SUPPLIED_CLIP_REPORT.md) covers the 
 
 The [rough two-angle waste-pit trial](MULTIANGLE_WASTE_PIT.md) aligns the edited views at 2 s and 56 s using the user's dozer landmark, then compares single-camera and cross-camera flame/smoke evidence with a synchronized local replay.
 
+The [shared temporal incident trial](SHARED_TEMPORAL_WASTE_PIT.md) builds on those aligned views. It tracks when same-camera model agreement, the second view, persistent boxes, and smoke each add evidence to one fire incident.
+
 The [D-Fire benchmark report](BENCHMARK_REPORT.md) contains the first measured comparison on **160 labeled test images and six test videos**, plus a smoke-specialist/fire-specialist OR result and ten windows from the released PyroNear temporal smoke system. The app opens with its results table and lets you select an original test image or clip to inspect the boxes. Compact result tables under `outputs/` are included in Git; downloaded media under `dataset/`, model weights under `models/`, and rendered videos and images under `outputs/` stay local.
 
 The [EMR Tilbury visit notes](https://app.notion.com/p/3e5196f5637381aea9c8e09aeb82013a) motivate the experiment: existing CCTV and thermal feeds exceed the attention of human monitors; the useful first measure is how many actionable minutes earlier smoke can be surfaced without swamping reviewers. The overnight East Tilbury incident happened at a different site from the Tilbury Dock visit. Its approximate timestamps should not be treated as ground truth without original footage.
