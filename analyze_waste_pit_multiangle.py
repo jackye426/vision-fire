@@ -1,7 +1,11 @@
-"""Exploratory replay of two edited waste-pit views on one rough timeline.
+"""Exploratory display of two edited waste-pit views.
 
-The user identified a dozer landmark at video second 2 in angle 1 and second 56
-in angle 2. This is a manual alignment hypothesis, not a measured clock sync.
+The user identified a dozer landmark at video second 2 in angle 1 and about
+second 56 in angle 2, then observed the second view lagged by about one second.
+The two sections also play at different speeds. Two user-identified matching
+events give a visual time warp: grabber drop 7 -> 59 s and water cannon 31 ->
+71 s. It maps the earlier dozer estimate 2 -> 56.5 s. This is not capture-clock
+synchronization; no cross-view alert timing is measured.
 Detections come from the existing 1 fps frame_results.csv; no model is rerun.
 """
 
@@ -24,11 +28,12 @@ OUT = ROOT / "outputs" / "youtube" / "multiangle_waste_pit.csv"
 SHEET = ROOT / "outputs" / "youtube" / f"{CLIP}_aligned_views.jpg"
 VIDEO = ROOT / "outputs" / "youtube" / f"{CLIP}_aligned_dfine_h264.mp4"
 MODELS = ("dfire_yolov8n", "dfine", "yolo")
-ANCHOR_A, ANCHOR_B = 2, 56
-LAST_COMMON_SECOND = 46  # Angle 2 ends at second 102.
+ANCHOR_A, ANCHOR_B = 2, 56.5
+SECOND_A, SECOND_B = 7, 59
+THIRD_A, THIRD_B = 31, 71
+LAST_COMMON_SECOND = 45  # Display index; angle 1 source 2..47 in this case study.
 SCORE = 0.25
 IOU = 0.20
-LOOKBACK = 2  # Cross-camera hit may be up to two sampled seconds old.
 
 # Box-centre regions around the visually reviewed pit fire/plume. Chosen after
 # seeing this positive clip: these are an illustrative check, not a deployable
@@ -39,6 +44,12 @@ REGIONS = {
     ("angle2", "flame"): (600, 300, 1100, 600),
     ("angle2", "smoke"): (600, 150, 1100, 600),
 }
+
+
+def angle2_video_time(angle1_video_time: float) -> float:
+    """Approximate angle-2 source time using two matching physical events."""
+    return SECOND_B + (angle1_video_time - SECOND_A) * (
+        (THIRD_B - SECOND_B) / (THIRD_A - SECOND_A))
 
 
 def load_rows() -> dict[tuple[str, int], list[dict]]:
@@ -52,7 +63,7 @@ def load_rows() -> dict[tuple[str, int], list[dict]]:
                 raise ValueError(f"Duplicate prediction: {key}")
             found[key] = json.loads(row["detections"])
     for model in MODELS:
-        for second in (*range(ANCHOR_A, 53), *range(ANCHOR_B, 103)):
+        for second in (*range(ANCHOR_A, 53), *range(int(ANCHOR_B), 103)):
             if (model, second) not in found:
                 raise ValueError(f"Missing prediction: {(model, second)}")
     return found
@@ -100,20 +111,6 @@ def first_repeat(data: dict, model: str, label: str, angle: str,
     return None
 
 
-def first_cross_camera(data: dict, model: str, label: str,
-                       focused: bool, anchor_b: int = ANCHOR_B,
-                       lookback: int = LOOKBACK) -> int | None:
-    for common in range(min(LAST_COMMON_SECOND, 102 - anchor_b) + 1):
-        recent = range(max(0, common - lookback), common + 1)
-        a = any(boxes(data, model, ANCHOR_A + s, label, "angle1", focused)
-                for s in recent)
-        b = any(boxes(data, model, anchor_b + s, label, "angle2", focused)
-                for s in recent)
-        if a and b:
-            return common
-    return None
-
-
 def fmt(value: int | None) -> str:
     return "" if value is None else str(value)
 
@@ -127,17 +124,19 @@ def make_sheet() -> None:
         raise RuntimeError(f"Cannot open {SOURCE}")
     fps = cap.get(cv2.CAP_PROP_FPS)
     panels = []
-    for a, b in ((2, 56), (5, 59), (10, 64), (13, 67)):
+    for offset in (0, 3, 5, 11, 20, 29):
+        a = ANCHOR_A + offset
+        b = angle2_video_time(a)
         pair = []
         for second, angle in ((a, "Angle 1"), (b, "Angle 2")):
             cap.set(cv2.CAP_PROP_POS_FRAMES, round(second * fps))
             ok, frame = cap.read()
             if not ok:
-                raise RuntimeError(f"Cannot read frame at {second}s")
+                raise RuntimeError(f"Cannot read frame at {second:.1f}s")
             frame = cv2.resize(frame, (640, 360), interpolation=cv2.INTER_AREA)
             panel = np.full((395, 640, 3), (25, 25, 25), np.uint8)
             panel[35:] = frame
-            cv2.putText(panel, f"{angle}: source {second}s  |  aligned +{a - ANCHOR_A}s",
+            cv2.putText(panel, f"{angle}: source {second:.1f}s  |  visual time warp",
                         (10, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.62,
                         (255, 255, 255), 2, cv2.LINE_AA)
             pair.append(panel)
@@ -161,7 +160,7 @@ def draw_text(image: np.ndarray, value: str, position: tuple[int, int],
 def make_video(data: dict) -> None:
     """Render a short D-FINE replay; detections remain the saved 1 fps outputs."""
     if not SOURCE.exists():
-        print(f"Skipped aligned video: source clip absent at {SOURCE}")
+        print(f"Skipped paired video: source clip absent at {SOURCE}")
         return
     source = cv2.VideoCapture(str(SOURCE))
     if not source.isOpened():
@@ -172,28 +171,24 @@ def make_video(data: dict) -> None:
                              5, (1280, 454))
     if not writer.isOpened():
         raise RuntimeError(f"Cannot write {temp}")
-    cross_flame = first_cross_camera(data, "dfine", "flame", True)
-    cross_smoke = first_cross_camera(data, "dfine", "smoke", True)
     try:
-        for index in range(25 * 5):
+        for index in range(34 * 5):
             common = index / 5
             sampled = int(common)
             canvas = np.full((454, 1280, 3), (25, 25, 25), np.uint8)
-            draw_text(canvas, f"Manual sync: angle 1 {ANCHOR_A + common:.1f}s  |  angle 2 {ANCHOR_B + common:.1f}s",
-                      (12, 28), 0.67)
-            flame_status = "confirmed" if cross_flame is not None and common >= cross_flame else "waiting"
-            smoke_status = "confirmed" if cross_smoke is not None and common >= cross_smoke else "waiting"
-            draw_text(canvas, f"D-FINE fire-area cross-camera: flame {flame_status}, smoke {smoke_status}",
-                      (12, 54), 0.60, (190, 230, 255))
-            for angle, anchor, left in (("angle1", ANCHOR_A, 0),
-                                         ("angle2", ANCHOR_B, 640)):
-                t = anchor + common
+            draw_text(canvas, "APPROXIMATE 2-LANDMARK VISUAL ALIGNMENT - NOT CAMERA CLOCK SYNC",
+                      (12, 28), 0.62, (190, 230, 255))
+            draw_text(canvas, f"View 1 {ANCHOR_A + common:.1f}s  |  view 2 {angle2_video_time(ANCHOR_A + common):.1f}s",
+                      (12, 54), 0.60)
+            for angle, left in (("angle1", 0), ("angle2", 640)):
+                t = (ANCHOR_A + common if angle == "angle1" else
+                     angle2_video_time(ANCHOR_A + common))
                 source.set(cv2.CAP_PROP_POS_FRAMES, round(t * fps))
                 ok, frame = source.read()
                 if not ok:
                     raise RuntimeError(f"Cannot read {angle} at {t:.1f}s")
                 height, width = frame.shape[:2]
-                second = anchor + sampled
+                second = int(ANCHOR_A + sampled) if angle == "angle1" else int(t)
                 for detection in data[("dfine", second)]:
                     if float(detection["score"]) < SCORE:
                         continue
@@ -218,7 +213,7 @@ def make_video(data: dict) -> None:
                     "-crf", "25", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
                     "-an", str(VIDEO)], check=True)
     temp.unlink()
-    print(f"Aligned D-FINE video: {VIDEO}")
+    print(f"Illustrative paired D-FINE video: {VIDEO}")
 
 
 def main() -> None:
@@ -229,24 +224,16 @@ def main() -> None:
             for model in MODELS:
                 a_hit = first_hit(data, model, label, "angle1", focused, ANCHOR_A)
                 a_repeat = first_repeat(data, model, label, "angle1", focused, ANCHOR_A)
-                b_hit = first_hit(data, model, label, "angle2", focused, ANCHOR_B)
-                b_repeat = first_repeat(data, model, label, "angle2", focused, ANCHOR_B)
-                cross = first_cross_camera(data, model, label, focused)
+                b_hit = first_hit(data, model, label, "angle2", focused, int(ANCHOR_B))
+                b_repeat = first_repeat(data, model, label, "angle2", focused, int(ANCHOR_B))
                 result.append({
                     "box_filter": "fire_area" if focused else "whole_frame",
                     "class": label,
                     "model": model,
-                    "angle1_first_hit_common_s": fmt(a_hit),
-                    "angle1_first_repeat_common_s": fmt(a_repeat),
-                    "angle2_first_hit_common_s": fmt(b_hit),
-                    "angle2_first_repeat_common_s": fmt(b_repeat),
-                    "cross_camera_first_hit_common_s": fmt(cross),
-                    "cross_camera_5s_lookback_common_s": fmt(first_cross_camera(
-                        data, model, label, focused, lookback=5)),
-                    "cross_camera_anchor_minus2_s": fmt(first_cross_camera(
-                        data, model, label, focused, ANCHOR_B - 2)),
-                    "cross_camera_anchor_plus2_s": fmt(first_cross_camera(
-                        data, model, label, focused, ANCHOR_B + 2)),
+                    "angle1_first_hit_source_s": fmt(None if a_hit is None else ANCHOR_A + a_hit),
+                    "angle1_first_repeat_source_s": fmt(None if a_repeat is None else ANCHOR_A + a_repeat),
+                    "angle2_first_hit_source_s": fmt(None if b_hit is None else int(ANCHOR_B) + b_hit),
+                    "angle2_first_repeat_source_s": fmt(None if b_repeat is None else int(ANCHOR_B) + b_repeat),
                 })
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with OUT.open("w", newline="", encoding="utf-8") as handle:

@@ -1,18 +1,48 @@
 {
   "incident_id": "waste_pit_1",
   "physical_zone": "waste_pit",
-  "alignment": {
-    "angle1_source_s": 2,
-    "angle2_source_s": 56
-  },
-  "stage": "persistent_both",
-  "first_evidence_aligned_s": 2,
-  "last_evidence_aligned_s": 42,
+  "visual_alignment_landmarks_source_s": [
+    {
+      "angle1": 2,
+      "angle2": 56.5
+    },
+    {
+      "angle1": 7,
+      "angle2": 59
+    },
+    {
+      "angle1": 31,
+      "angle2": 71
+    }
+  ],
+  "cross_view_temporal_enabled": false,
+  "temporal_mode": "approximate_visual_alignment_offline_case_study",
+  "stage": "provisional",
+  "first_evidence_replay_s": 3,
+  "last_evidence_replay_s": 45,
   "operator_alerts_emitted": 1,
-  "supporting_cameras": [
+  "cameras_with_detections": [
     "angle1",
     "angle2"
   ],
+  "camera_observations_source_s": {
+    "angle1": {
+      "first_flame_source_s": 5,
+      "last_flame_source_s": 42,
+      "first_same_image_model_agreement_source_s": 6,
+      "last_same_image_model_agreement_source_s": 40,
+      "first_smoke_source_s": 13,
+      "last_smoke_source_s": 44
+    },
+    "angle2": {
+      "first_flame_source_s": 58,
+      "last_flame_source_s": 79,
+      "first_same_image_model_agreement_source_s": 58,
+      "last_same_image_model_agreement_source_s": 77,
+      "first_smoke_source_s": 62,
+      "last_smoke_source_s": 74
+    }
+  },
   "supporting_models": [
     "dfine",
     "dfire_yolov8n"
@@ -21,11 +51,9 @@
     "flame",
     "smoke"
   ],
-  "milestones_aligned_s": {
-    "watch": 2,
-    "provisional": 2,
-    "two_view": 3,
-    "persistent_both": 4,
-    "first_smoke": 6
+  "milestones_replay_s": {
+    "watch": 3,
+    "provisional": 3,
+    "first_smoke": 11
   }
 }

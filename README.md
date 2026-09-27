@@ -16,9 +16,9 @@ The [Roboflow flame-positive report](outputs/roboflow_flame_positive/REPORT.md) 
 
 The [two supplied screen recordings report](SUPPLIED_CLIP_REPORT.md) covers the previously inaccessible K3ML and wm22 videos, including their first visible flame boxes, misleading loader/wall detections, and the temporal pipeline's window decisions.
 
-The [rough two-angle waste-pit trial](MULTIANGLE_WASTE_PIT.md) aligns the edited views at 2 s and 56 s using the user's dozer landmark, then compares single-camera and cross-camera flame/smoke evidence with a synchronized local replay.
+The [two-angle waste-pit case study](MULTIANGLE_WASTE_PIT.md) reports flame and smoke detections separately in each edited view. The views play at different speeds; the local side-by-side video uses two matching events to correct the display speed approximately, without claiming camera-clock synchronization or a measured cross-camera alert time.
 
-The [shared temporal incident trial](SHARED_TEMPORAL_WASTE_PIT.md) builds on those aligned views. It tracks when same-camera model agreement, the second view, persistent boxes, and smoke each add evidence to one fire incident.
+The [shared incident prototype](SHARED_TEMPORAL_WASTE_PIT.md) records per-view detections, same-view box repeats, same-image model agreement, and later evidence under one known waste-pit incident. Cross-view verification is disabled for this edited footage; the report explains the context needed for simultaneous camera feeds.
 
 The [D-Fire benchmark report](BENCHMARK_REPORT.md) contains the first measured comparison on **160 labeled test images and six test videos**, plus a smoke-specialist/fire-specialist OR result and ten windows from the released PyroNear temporal smoke system. The app opens with its results table and lets you select an original test image or clip to inspect the boxes. Compact result tables under `outputs/` are included in Git; downloaded media under `dataset/`, model weights under `models/`, and rendered videos and images under `outputs/` stay local.
 
