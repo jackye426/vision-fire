@@ -1,0 +1,379 @@
+{
+  "shared_incident_id": "pit",
+  "clock": 12,
+  "clock_note": "Estimated shared playback clock; angle 2 has a visual time warp.",
+  "camera_to_physical_zone": {
+    "angle1": "waste_pit",
+    "angle2": "waste_pit"
+  },
+  "zone_mapping_note": "Waste-pit regions were selected after seeing this clip; do not treat raw same-class boxes across cameras as the same physical location.",
+  "current_camera": "angle1",
+  "current_source_second": 12,
+  "current_target": {
+    "current_box": [
+      588,
+      504,
+      641,
+      597
+    ],
+    "class": "smoke",
+    "same_location_models": [
+      "yolo"
+    ],
+    "models_without_same_location_box": [
+      "dfine",
+      "dfire_yolov8n"
+    ],
+    "prior_same_location_sample_times": [],
+    "other_camera_same_class_raw_observations": [],
+    "same_physical_zone_cross_view_links": []
+  },
+  "cumulative_detection_summary": [
+    {
+      "camera": "angle1",
+      "model": "dfine",
+      "class": "flame",
+      "sampled_frames_with_hit": 8,
+      "first_clock": 0,
+      "last_clock": 12
+    },
+    {
+      "camera": "angle1",
+      "model": "dfine",
+      "class": "smoke",
+      "sampled_frames_with_hit": 3,
+      "first_clock": 0,
+      "last_clock": 6
+    },
+    {
+      "camera": "angle1",
+      "model": "dfire_yolov8n",
+      "class": "flame",
+      "sampled_frames_with_hit": 5,
+      "first_clock": 6,
+      "last_clock": 12
+    },
+    {
+      "camera": "angle1",
+      "model": "yolo",
+      "class": "flame",
+      "sampled_frames_with_hit": 5,
+      "first_clock": 6,
+      "last_clock": 12
+    },
+    {
+      "camera": "angle1",
+      "model": "yolo",
+      "class": "smoke",
+      "sampled_frames_with_hit": 1,
+      "first_clock": 12,
+      "last_clock": 12
+    },
+    {
+      "camera": "angle2",
+      "model": "dfine",
+      "class": "flame",
+      "sampled_frames_with_hit": 6,
+      "first_clock": 1,
+      "last_clock": 11
+    },
+    {
+      "camera": "angle2",
+      "model": "dfine",
+      "class": "smoke",
+      "sampled_frames_with_hit": 1,
+      "first_clock": 9,
+      "last_clock": 9
+    },
+    {
+      "camera": "angle2",
+      "model": "dfire_yolov8n",
+      "class": "flame",
+      "sampled_frames_with_hit": 4,
+      "first_clock": 5,
+      "last_clock": 11
+    },
+    {
+      "camera": "angle2",
+      "model": "yolo",
+      "class": "flame",
+      "sampled_frames_with_hit": 5,
+      "first_clock": 1,
+      "last_clock": 11
+    }
+  ],
+  "recent_detections": [
+    {
+      "id": "angle1:8:dfine:0",
+      "clock": 8,
+      "camera": "angle1",
+      "source_s": 8,
+      "model": "dfine",
+      "label": "flame",
+      "score": 0.419,
+      "box": [
+        611,
+        606,
+        667,
+        665
+      ]
+    },
+    {
+      "id": "angle1:8:dfire_yolov8n:0",
+      "clock": 8,
+      "camera": "angle1",
+      "source_s": 8,
+      "model": "dfire_yolov8n",
+      "label": "flame",
+      "score": 0.461,
+      "box": [
+        617,
+        610,
+        661,
+        654
+      ]
+    },
+    {
+      "id": "angle1:8:yolo:0",
+      "clock": 8,
+      "camera": "angle1",
+      "source_s": 8,
+      "model": "yolo",
+      "label": "flame",
+      "score": 0.28,
+      "box": [
+        623,
+        614,
+        657,
+        649
+      ]
+    },
+    {
+      "id": "angle2:60:dfine:0",
+      "clock": 9,
+      "camera": "angle2",
+      "source_s": 60,
+      "model": "dfine",
+      "label": "flame",
+      "score": 0.705,
+      "box": [
+        797,
+        401,
+        839,
+        452
+      ]
+    },
+    {
+      "id": "angle2:60:dfine:9",
+      "clock": 9,
+      "camera": "angle2",
+      "source_s": 60,
+      "model": "dfine",
+      "label": "smoke",
+      "score": 0.333,
+      "box": [
+        1076,
+        296,
+        1177,
+        407
+      ]
+    },
+    {
+      "id": "angle2:60:dfire_yolov8n:0",
+      "clock": 9,
+      "camera": "angle2",
+      "source_s": 60,
+      "model": "dfire_yolov8n",
+      "label": "flame",
+      "score": 0.535,
+      "box": [
+        799,
+        403,
+        840,
+        446
+      ]
+    },
+    {
+      "id": "angle2:60:yolo:0",
+      "clock": 9,
+      "camera": "angle2",
+      "source_s": 60,
+      "model": "yolo",
+      "label": "flame",
+      "score": 0.516,
+      "box": [
+        799,
+        404,
+        839,
+        450
+      ]
+    },
+    {
+      "id": "angle1:11:dfine:0",
+      "clock": 11,
+      "camera": "angle1",
+      "source_s": 11,
+      "model": "dfine",
+      "label": "flame",
+      "score": 0.38,
+      "box": [
+        621,
+        603,
+        664,
+        639
+      ]
+    },
+    {
+      "id": "angle1:11:dfire_yolov8n:0",
+      "clock": 11,
+      "camera": "angle1",
+      "source_s": 11,
+      "model": "dfire_yolov8n",
+      "label": "flame",
+      "score": 0.32,
+      "box": [
+        622,
+        604,
+        665,
+        637
+      ]
+    },
+    {
+      "id": "angle1:11:yolo:0",
+      "clock": 11,
+      "camera": "angle1",
+      "source_s": 11,
+      "model": "yolo",
+      "label": "flame",
+      "score": 0.288,
+      "box": [
+        624,
+        604,
+        663,
+        636
+      ]
+    },
+    {
+      "id": "angle2:61:dfine:0",
+      "clock": 11,
+      "camera": "angle2",
+      "source_s": 61,
+      "model": "dfine",
+      "label": "flame",
+      "score": 0.743,
+      "box": [
+        794,
+        402,
+        837,
+        444
+      ]
+    },
+    {
+      "id": "angle2:61:dfire_yolov8n:0",
+      "clock": 11,
+      "camera": "angle2",
+      "source_s": 61,
+      "model": "dfire_yolov8n",
+      "label": "flame",
+      "score": 0.549,
+      "box": [
+        796,
+        405,
+        833,
+        439
+      ]
+    },
+    {
+      "id": "angle2:61:yolo:0",
+      "clock": 11,
+      "camera": "angle2",
+      "source_s": 61,
+      "model": "yolo",
+      "label": "flame",
+      "score": 0.487,
+      "box": [
+        796,
+        403,
+        835,
+        440
+      ]
+    },
+    {
+      "id": "angle1:12:dfine:0",
+      "clock": 12,
+      "camera": "angle1",
+      "source_s": 12,
+      "model": "dfine",
+      "label": "flame",
+      "score": 0.645,
+      "box": [
+        616,
+        594,
+        661,
+        638
+      ]
+    },
+    {
+      "id": "angle1:12:dfire_yolov8n:0",
+      "clock": 12,
+      "camera": "angle1",
+      "source_s": 12,
+      "model": "dfire_yolov8n",
+      "label": "flame",
+      "score": 0.515,
+      "box": [
+        616,
+        597,
+        659,
+        631
+      ]
+    },
+    {
+      "id": "angle1:12:yolo:0",
+      "clock": 12,
+      "camera": "angle1",
+      "source_s": 12,
+      "model": "yolo",
+      "label": "flame",
+      "score": 0.507,
+      "box": [
+        620,
+        597,
+        660,
+        635
+      ]
+    },
+    {
+      "id": "angle1:12:yolo:1",
+      "clock": 12,
+      "camera": "angle1",
+      "source_s": 12,
+      "model": "yolo",
+      "label": "smoke",
+      "score": 0.414,
+      "box": [
+        588,
+        504,
+        641,
+        597
+      ]
+    }
+  ],
+  "earlier_policy_actions": [
+    {
+      "clock": 1,
+      "action": "watch",
+      "target": "flame"
+    },
+    {
+      "clock": 3,
+      "action": "watch",
+      "target": "flame"
+    },
+    {
+      "clock": 5,
+      "action": "escalate",
+      "target": "flame"
+    }
+  ]
+}

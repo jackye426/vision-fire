@@ -1,0 +1,196 @@
+{
+  "shared_incident_id": "pit",
+  "clock": 3,
+  "clock_note": "Estimated shared playback clock; angle 2 has a visual time warp.",
+  "camera_to_physical_zone": {
+    "angle1": "waste_pit",
+    "angle2": "waste_pit"
+  },
+  "zone_mapping_note": "Waste-pit regions were selected after seeing this clip; do not treat raw same-class boxes across cameras as the same physical location.",
+  "current_camera": "angle2",
+  "current_source_second": 57,
+  "current_target": {
+    "current_box": [
+      481,
+      133,
+      537,
+      150
+    ],
+    "class": "flame",
+    "same_location_models": [
+      "dfine",
+      "yolo"
+    ],
+    "models_without_same_location_box": [
+      "dfire_yolov8n"
+    ],
+    "prior_same_location_sample_times": [
+      56
+    ],
+    "other_camera_same_class_raw_observations": [],
+    "same_physical_zone_cross_view_links": []
+  },
+  "cumulative_detection_summary": [
+    {
+      "camera": "angle1",
+      "model": "dfine",
+      "class": "flame",
+      "sampled_frames_with_hit": 2,
+      "first_clock": 0,
+      "last_clock": 1
+    },
+    {
+      "camera": "angle1",
+      "model": "dfine",
+      "class": "smoke",
+      "sampled_frames_with_hit": 2,
+      "first_clock": 0,
+      "last_clock": 2
+    },
+    {
+      "camera": "angle2",
+      "model": "dfine",
+      "class": "flame",
+      "sampled_frames_with_hit": 2,
+      "first_clock": 1,
+      "last_clock": 3
+    },
+    {
+      "camera": "angle2",
+      "model": "yolo",
+      "class": "flame",
+      "sampled_frames_with_hit": 2,
+      "first_clock": 1,
+      "last_clock": 3
+    }
+  ],
+  "recent_detections": [
+    {
+      "id": "angle1:0:dfine:0",
+      "clock": 0,
+      "camera": "angle1",
+      "source_s": 0,
+      "model": "dfine",
+      "label": "flame",
+      "score": 0.287,
+      "box": [
+        1139,
+        330,
+        1197,
+        374
+      ]
+    },
+    {
+      "id": "angle1:0:dfine:1",
+      "clock": 0,
+      "camera": "angle1",
+      "source_s": 0,
+      "model": "dfine",
+      "label": "smoke",
+      "score": 0.265,
+      "box": [
+        146,
+        0,
+        568,
+        254
+      ]
+    },
+    {
+      "id": "angle1:1:dfine:0",
+      "clock": 1,
+      "camera": "angle1",
+      "source_s": 1,
+      "model": "dfine",
+      "label": "flame",
+      "score": 0.251,
+      "box": [
+        1139,
+        330,
+        1197,
+        374
+      ]
+    },
+    {
+      "id": "angle2:56:dfine:0",
+      "clock": 1,
+      "camera": "angle2",
+      "source_s": 56,
+      "model": "dfine",
+      "label": "flame",
+      "score": 0.678,
+      "box": [
+        481,
+        133,
+        537,
+        150
+      ]
+    },
+    {
+      "id": "angle2:56:yolo:0",
+      "clock": 1,
+      "camera": "angle2",
+      "source_s": 56,
+      "model": "yolo",
+      "label": "flame",
+      "score": 0.355,
+      "box": [
+        479,
+        131,
+        540,
+        150
+      ]
+    },
+    {
+      "id": "angle1:2:dfine:0",
+      "clock": 2,
+      "camera": "angle1",
+      "source_s": 2,
+      "model": "dfine",
+      "label": "smoke",
+      "score": 0.253,
+      "box": [
+        149,
+        0,
+        565,
+        252
+      ]
+    },
+    {
+      "id": "angle2:57:dfine:0",
+      "clock": 3,
+      "camera": "angle2",
+      "source_s": 57,
+      "model": "dfine",
+      "label": "flame",
+      "score": 0.638,
+      "box": [
+        481,
+        133,
+        537,
+        150
+      ]
+    },
+    {
+      "id": "angle2:57:yolo:0",
+      "clock": 3,
+      "camera": "angle2",
+      "source_s": 57,
+      "model": "yolo",
+      "label": "flame",
+      "score": 0.334,
+      "box": [
+        479,
+        131,
+        541,
+        150
+      ]
+    }
+  ],
+  "earlier_policy_actions": [
+    {
+      "clock": 1,
+      "action": "watch",
+      "target": "flame"
+    }
+  ]
+}

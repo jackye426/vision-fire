@@ -1,0 +1,13 @@
+scene,policy,first_alert_playback_s,flame_onset_playback_s,delay_from_onset_playback_s,false_incident_episodes_in_replay_window,wrong_target_escalations_in_replay_window,median_api_ms_selected_calls,api_cost_usd_selected_calls,selected_checkpoints
+pit,rule,5,2,3,0,0,,,5
+pit,any_two_models,1,2,,1,1,,,5
+pit,box,5,2,3,0,0,3124,0.009214,5
+pit,incident,5,2,3,0,0,4289,0.013509,5
+house,rule,19,5,14,0,0,,,3
+house,any_two_models,16,5,11,0,0,,,3
+house,box,13,5,8,0,0,2358,0.0040305,3
+house,incident,13,5,8,0,0,2393,0.0055225,3
+cooler,rule,,,,0,0,,,3
+cooler,any_two_models,,,,0,0,,,3
+cooler,box,,,,0,0,1898,0.004221,3
+cooler,incident,,,,0,0,2416,0.005468,3

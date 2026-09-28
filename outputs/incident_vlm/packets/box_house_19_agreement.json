@@ -1,0 +1,294 @@
+{
+  "shared_incident_id": "house",
+  "clock": 19,
+  "clock_note": "Single source playback clock, approximately 1 fps.",
+  "camera_to_physical_zone": {
+    "house_cam": "house_scene"
+  },
+  "zone_mapping_note": "One camera; no cross-view link available.",
+  "current_camera": "house_cam",
+  "current_source_second": 19,
+  "current_target": {
+    "current_box": [
+      170,
+      29,
+      266,
+      227
+    ],
+    "class": "flame",
+    "same_location_models": [
+      "dfine",
+      "dfire_yolov8n",
+      "yolo"
+    ],
+    "models_without_same_location_box": [],
+    "prior_same_location_sample_times": [
+      13,
+      15,
+      16,
+      17,
+      18
+    ],
+    "other_camera_same_class_raw_observations": [],
+    "same_physical_zone_cross_view_links": []
+  },
+  "cumulative_detection_summary": [
+    {
+      "camera": "house_cam",
+      "model": "dfine",
+      "class": "flame",
+      "sampled_frames_with_hit": 7,
+      "first_clock": 13,
+      "last_clock": 19
+    },
+    {
+      "camera": "house_cam",
+      "model": "dfine",
+      "class": "smoke",
+      "sampled_frames_with_hit": 5,
+      "first_clock": 1,
+      "last_clock": 19
+    },
+    {
+      "camera": "house_cam",
+      "model": "dfire_yolov8n",
+      "class": "flame",
+      "sampled_frames_with_hit": 1,
+      "first_clock": 19,
+      "last_clock": 19
+    },
+    {
+      "camera": "house_cam",
+      "model": "dfire_yolov8n",
+      "class": "smoke",
+      "sampled_frames_with_hit": 3,
+      "first_clock": 13,
+      "last_clock": 19
+    },
+    {
+      "camera": "house_cam",
+      "model": "yolo",
+      "class": "flame",
+      "sampled_frames_with_hit": 2,
+      "first_clock": 16,
+      "last_clock": 19
+    },
+    {
+      "camera": "house_cam",
+      "model": "yolo",
+      "class": "smoke",
+      "sampled_frames_with_hit": 1,
+      "first_clock": 18,
+      "last_clock": 18
+    }
+  ],
+  "recent_detections": [
+    {
+      "id": "house_cam:15:dfine:0",
+      "clock": 15,
+      "camera": "house_cam",
+      "source_s": 15,
+      "model": "dfine",
+      "label": "flame",
+      "score": 0.647,
+      "box": [
+        197,
+        143,
+        254,
+        225
+      ]
+    },
+    {
+      "id": "house_cam:16:dfine:0",
+      "clock": 16,
+      "camera": "house_cam",
+      "source_s": 16,
+      "model": "dfine",
+      "label": "flame",
+      "score": 0.696,
+      "box": [
+        167,
+        136,
+        260,
+        225
+      ]
+    },
+    {
+      "id": "house_cam:16:yolo:0",
+      "clock": 16,
+      "camera": "house_cam",
+      "source_s": 16,
+      "model": "yolo",
+      "label": "flame",
+      "score": 0.575,
+      "box": [
+        166,
+        138,
+        274,
+        223
+      ]
+    },
+    {
+      "id": "house_cam:17:dfine:0",
+      "clock": 17,
+      "camera": "house_cam",
+      "source_s": 17,
+      "model": "dfine",
+      "label": "flame",
+      "score": 0.397,
+      "box": [
+        194,
+        99,
+        267,
+        220
+      ]
+    },
+    {
+      "id": "house_cam:18:dfine:0",
+      "clock": 18,
+      "camera": "house_cam",
+      "source_s": 18,
+      "model": "dfine",
+      "label": "flame",
+      "score": 0.717,
+      "box": [
+        161,
+        148,
+        271,
+        228
+      ]
+    },
+    {
+      "id": "house_cam:18:dfine:2",
+      "clock": 18,
+      "camera": "house_cam",
+      "source_s": 18,
+      "model": "dfine",
+      "label": "smoke",
+      "score": 0.384,
+      "box": [
+        514,
+        26,
+        831,
+        382
+      ]
+    },
+    {
+      "id": "house_cam:18:dfire_yolov8n:0",
+      "clock": 18,
+      "camera": "house_cam",
+      "source_s": 18,
+      "model": "dfire_yolov8n",
+      "label": "smoke",
+      "score": 0.702,
+      "box": [
+        505,
+        30,
+        823,
+        332
+      ]
+    },
+    {
+      "id": "house_cam:18:yolo:0",
+      "clock": 18,
+      "camera": "house_cam",
+      "source_s": 18,
+      "model": "yolo",
+      "label": "smoke",
+      "score": 0.278,
+      "box": [
+        500,
+        30,
+        828,
+        343
+      ]
+    },
+    {
+      "id": "house_cam:19:dfine:0",
+      "clock": 19,
+      "camera": "house_cam",
+      "source_s": 19,
+      "model": "dfine",
+      "label": "smoke",
+      "score": 0.901,
+      "box": [
+        538,
+        25,
+        821,
+        308
+      ]
+    },
+    {
+      "id": "house_cam:19:dfine:1",
+      "clock": 19,
+      "camera": "house_cam",
+      "source_s": 19,
+      "model": "dfine",
+      "label": "flame",
+      "score": 0.845,
+      "box": [
+        170,
+        29,
+        266,
+        227
+      ]
+    },
+    {
+      "id": "house_cam:19:dfire_yolov8n:0",
+      "clock": 19,
+      "camera": "house_cam",
+      "source_s": 19,
+      "model": "dfire_yolov8n",
+      "label": "smoke",
+      "score": 0.797,
+      "box": [
+        539,
+        28,
+        822,
+        293
+      ]
+    },
+    {
+      "id": "house_cam:19:dfire_yolov8n:1",
+      "clock": 19,
+      "camera": "house_cam",
+      "source_s": 19,
+      "model": "dfire_yolov8n",
+      "label": "flame",
+      "score": 0.262,
+      "box": [
+        164,
+        39,
+        287,
+        238
+      ]
+    },
+    {
+      "id": "house_cam:19:yolo:0",
+      "clock": 19,
+      "camera": "house_cam",
+      "source_s": 19,
+      "model": "yolo",
+      "label": "flame",
+      "score": 0.592,
+      "box": [
+        166,
+        25,
+        279,
+        295
+      ]
+    }
+  ],
+  "earlier_policy_actions": [
+    {
+      "clock": 13,
+      "action": "escalate",
+      "target": "flame"
+    },
+    {
+      "clock": 14,
+      "action": "update_incident",
+      "target": "flame"
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "shared_incident_id": "house",
+  "clock": 13,
+  "clock_note": "Single source playback clock, approximately 1 fps.",
+  "camera_to_physical_zone": {
+    "house_cam": "house_scene"
+  },
+  "zone_mapping_note": "One camera; no cross-view link available.",
+  "current_camera": "house_cam",
+  "current_source_second": 13,
+  "current_target": {
+    "current_box": [
+      230,
+      174,
+      263,
+      221
+    ],
+    "class": "flame",
+    "same_location_models": [
+      "dfine"
+    ],
+    "models_without_same_location_box": [
+      "dfire_yolov8n",
+      "yolo"
+    ],
+    "prior_same_location_sample_times": [],
+    "other_camera_same_class_raw_observations": [],
+    "same_physical_zone_cross_view_links": []
+  },
+  "cumulative_detection_summary": [
+    {
+      "camera": "house_cam",
+      "model": "dfine",
+      "class": "flame",
+      "sampled_frames_with_hit": 1,
+      "first_clock": 13,
+      "last_clock": 13
+    },
+    {
+      "camera": "house_cam",
+      "model": "dfine",
+      "class": "smoke",
+      "sampled_frames_with_hit": 3,
+      "first_clock": 1,
+      "last_clock": 12
+    },
+    {
+      "camera": "house_cam",
+      "model": "dfire_yolov8n",
+      "class": "smoke",
+      "sampled_frames_with_hit": 1,
+      "first_clock": 13,
+      "last_clock": 13
+    }
+  ],
+  "recent_detections": [
+    {
+      "id": "house_cam:12:dfine:0",
+      "clock": 12,
+      "camera": "house_cam",
+      "source_s": 12,
+      "model": "dfine",
+      "label": "smoke",
+      "score": 0.604,
+      "box": [
+        26,
+        27,
+        828,
+        454
+      ]
+    },
+    {
+      "id": "house_cam:13:dfine:0",
+      "clock": 13,
+      "camera": "house_cam",
+      "source_s": 13,
+      "model": "dfine",
+      "label": "flame",
+      "score": 0.473,
+      "box": [
+        230,
+        174,
+        263,
+        221
+      ]
+    },
+    {
+      "id": "house_cam:13:dfire_yolov8n:0",
+      "clock": 13,
+      "camera": "house_cam",
+      "source_s": 13,
+      "model": "dfire_yolov8n",
+      "label": "smoke",
+      "score": 0.865,
+      "box": [
+        590,
+        43,
+        823,
+        448
+      ]
+    }
+  ],
+  "earlier_policy_actions": []
+}

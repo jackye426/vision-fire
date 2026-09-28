@@ -1,0 +1,153 @@
+{
+  "shared_incident_id": "cooler",
+  "clock": 15,
+  "clock_note": "Single source playback clock, approximately 1 fps.",
+  "camera_to_physical_zone": {
+    "cooler_cam": "robot_scene"
+  },
+  "zone_mapping_note": "One camera; no cross-view link available.",
+  "current_camera": "cooler_cam",
+  "current_source_second": 15,
+  "current_target": {
+    "current_box": [
+      622,
+      319,
+      655,
+      344
+    ],
+    "class": "flame",
+    "same_location_models": [
+      "dfine"
+    ],
+    "models_without_same_location_box": [
+      "dfire_yolov8n",
+      "yolo"
+    ],
+    "prior_same_location_sample_times": [],
+    "other_camera_same_class_raw_observations": [],
+    "same_physical_zone_cross_view_links": []
+  },
+  "cumulative_detection_summary": [
+    {
+      "camera": "cooler_cam",
+      "model": "dfine",
+      "class": "flame",
+      "sampled_frames_with_hit": 1,
+      "first_clock": 15,
+      "last_clock": 15
+    },
+    {
+      "camera": "cooler_cam",
+      "model": "dfine",
+      "class": "smoke",
+      "sampled_frames_with_hit": 4,
+      "first_clock": 0,
+      "last_clock": 15
+    },
+    {
+      "camera": "cooler_cam",
+      "model": "dfire_yolov8n",
+      "class": "flame",
+      "sampled_frames_with_hit": 4,
+      "first_clock": 6,
+      "last_clock": 10
+    },
+    {
+      "camera": "cooler_cam",
+      "model": "dfire_yolov8n",
+      "class": "smoke",
+      "sampled_frames_with_hit": 6,
+      "first_clock": 7,
+      "last_clock": 12
+    }
+  ],
+  "recent_detections": [
+    {
+      "id": "cooler_cam:11:dfire_yolov8n:0",
+      "clock": 11,
+      "camera": "cooler_cam",
+      "source_s": 11,
+      "model": "dfire_yolov8n",
+      "label": "smoke",
+      "score": 0.336,
+      "box": [
+        293,
+        122,
+        414,
+        224
+      ]
+    },
+    {
+      "id": "cooler_cam:12:dfire_yolov8n:0",
+      "clock": 12,
+      "camera": "cooler_cam",
+      "source_s": 12,
+      "model": "dfire_yolov8n",
+      "label": "smoke",
+      "score": 0.3,
+      "box": [
+        295,
+        121,
+        411,
+        224
+      ]
+    },
+    {
+      "id": "cooler_cam:13:dfine:0",
+      "clock": 13,
+      "camera": "cooler_cam",
+      "source_s": 13,
+      "model": "dfine",
+      "label": "smoke",
+      "score": 0.626,
+      "box": [
+        610,
+        63,
+        735,
+        264
+      ]
+    },
+    {
+      "id": "cooler_cam:15:dfine:0",
+      "clock": 15,
+      "camera": "cooler_cam",
+      "source_s": 15,
+      "model": "dfine",
+      "label": "flame",
+      "score": 0.475,
+      "box": [
+        622,
+        319,
+        655,
+        344
+      ]
+    },
+    {
+      "id": "cooler_cam:15:dfine:1",
+      "clock": 15,
+      "camera": "cooler_cam",
+      "source_s": 15,
+      "model": "dfine",
+      "label": "smoke",
+      "score": 0.422,
+      "box": [
+        484,
+        69,
+        571,
+        232
+      ]
+    }
+  ],
+  "earlier_policy_actions": [
+    {
+      "clock": 6,
+      "action": "watch",
+      "target": "flame"
+    },
+    {
+      "clock": 7,
+      "action": "watch",
+      "target": "flame"
+    }
+  ]
+}

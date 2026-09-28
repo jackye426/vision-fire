@@ -1,0 +1,81 @@
+{
+  "shared_incident_id": "cooler",
+  "clock": 6,
+  "clock_note": "Single source playback clock, approximately 1 fps.",
+  "camera_to_physical_zone": {
+    "cooler_cam": "robot_scene"
+  },
+  "zone_mapping_note": "One camera; no cross-view link available.",
+  "current_camera": "cooler_cam",
+  "current_source_second": 6,
+  "current_target": {
+    "current_box": [
+      380,
+      274,
+      411,
+      329
+    ],
+    "class": "flame",
+    "same_location_models": [
+      "dfire_yolov8n"
+    ],
+    "models_without_same_location_box": [
+      "dfine",
+      "yolo"
+    ],
+    "prior_same_location_sample_times": [],
+    "other_camera_same_class_raw_observations": [],
+    "same_physical_zone_cross_view_links": []
+  },
+  "cumulative_detection_summary": [
+    {
+      "camera": "cooler_cam",
+      "model": "dfine",
+      "class": "smoke",
+      "sampled_frames_with_hit": 2,
+      "first_clock": 0,
+      "last_clock": 5
+    },
+    {
+      "camera": "cooler_cam",
+      "model": "dfire_yolov8n",
+      "class": "flame",
+      "sampled_frames_with_hit": 1,
+      "first_clock": 6,
+      "last_clock": 6
+    }
+  ],
+  "recent_detections": [
+    {
+      "id": "cooler_cam:5:dfine:0",
+      "clock": 5,
+      "camera": "cooler_cam",
+      "source_s": 5,
+      "model": "dfine",
+      "label": "smoke",
+      "score": 0.339,
+      "box": [
+        67,
+        66,
+        155,
+        265
+      ]
+    },
+    {
+      "id": "cooler_cam:6:dfire_yolov8n:0",
+      "clock": 6,
+      "camera": "cooler_cam",
+      "source_s": 6,
+      "model": "dfire_yolov8n",
+      "label": "flame",
+      "score": 0.435,
+      "box": [
+        380,
+        274,
+        411,
+        329
+      ]
+    }
+  ],
+  "earlier_policy_actions": []
+}
